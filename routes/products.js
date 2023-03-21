@@ -1,6 +1,7 @@
 const {Router} = require('express')
-const route = Router()
 const {productos} = require('../db')
+
+const route = Router()
 
 //------------------------------------------TODOS LOS PRODUCTOS------------------------------------
 route.get('/', async (req, res) => {
