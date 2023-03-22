@@ -1,23 +1,12 @@
 const express = require('express')
 const {database} = require('./db')
 const route = require('./routes/products')
+const routesUser = require('./routes/users')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
-const passport = require('passport')
 
 const app = express()
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
-
-app.use(cookieParser('es un secretoooo tu mirada y la mia un presentimiento'))
-app.use(session({
-  secret: 'es un secretoooo tu mirada y la mia un presentimiento',
-  resave: true,
-  saveUninitialized: true
-}))
-app.use(passport.initialize())
 app.use(bodyParser.json())
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
@@ -27,7 +16,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', route )
+app.use('/products', route )
+app.use('/users', routesUser )
 
 database
 .sync({alter: true})
