@@ -23,18 +23,25 @@ routesUser.get('/', async (req, res) => {
 routesUser.post('/signup', async (req, res) => {
 
     const {nombre, apellido, email, contraseña} = req.body
+
+    const usuario_ingresante = await users.findOne({ where: { email }})
+
     try{
         const hash = await bcrypt.hash(contraseña, 10)
 
-         let nuevoProd = await users.create({
-            nombre: nombre,
-            apellido: apellido,
-            email: email,
-            contraseña: hash,
-         })
-         res.status(200).send('se ha creado el usuario exitosamente')
+        if(usuario_ingresante == null){
+            await users.create({
+                nombre: nombre,
+                apellido: apellido,
+                email: email,
+                contraseña: hash,
+             })
+             res.status(200).send('se ha creado el usuario exitosamente')
+        }else{
+            res.status(400).send('error! el usuario ya existe, inicia sesion con el mismo o crea una cuenta diferente')
+        }
     }catch(err){
-         res.status(400).send('cago')
+         res.status(400).send('error! catch')
     }
 
  })
