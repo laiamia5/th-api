@@ -3,6 +3,8 @@ const {database} = require('./db')
 const route = require('./routes/products')
 const routesUser = require('./routes/users')
 const bodyParser = require('body-parser')
+const verificarToken = require('./controller/validate-token')
+const routerDash = require('./controller/dashboard')
 
 const app = express()
 
@@ -16,6 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/profile', routerDash)
 app.use('/products', route )
 app.use('/users', routesUser )
 
