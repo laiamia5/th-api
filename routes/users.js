@@ -48,7 +48,7 @@ routesUser.post('/signup', async (req, res) => {
 
  })
 
- //------------------------------------------OBTENER USUARIO--------------------------------------------------
+ //------------------------------------------LOGEAR USUARIO--------------------------------------------------
 
  routesUser.post('/signin', async (req, res) => {
     
@@ -72,14 +72,45 @@ routesUser.post('/signup', async (req, res) => {
     }
     const token = jwt.sign(info, process.env.SECRET_TOKEN)
 
-    res.header('auth-token', token).json({
-        error: null,
-        data: {token}
-    })
-    //el token se guardara en el header del navegador y luego en la ruta /profile este se pide,
-    //por eso es que solo puede acceder ese usuario por que la informacion se pedira en un objeto guardado 
-    //localmente en el navegador
+    res.status(200).json({...usuario_ingresante.dataValues, token})
+
 })
+
+//--------------------------CONTROLLER QUE VERIFICA EL TOKEN--------------------------------
+
+const verifyToken = (req, res, next) => {
+    const authheader = req.headers['authorization']
+
+    const token = authheader && authheader.split(' ')[1];
+    console.log(authheader)
+
+    if(token == null) return res.status(401).send('token requerido')
+
+    jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
+
+        if(err) return res.status(403).send('token invalido')
+
+        console.log(user)
+        req.user = user
+        next();
+    })
+    
+}
+
+// -----------------------------OBTENER PERFIL DE USUARIO------------------------------
+
+routesUser.get('/profile', verifyToken, async (req, res) => { 
+
+    let idusuario = req.user.id
+    try{
+        let usuario = await users.findByPk(idusuario)
+        res.send(usuario)
+    }catch(err){
+        res.status(401).send('error de acceso')
+    }
+
+})
+
 
 
 module.exports = routesUser

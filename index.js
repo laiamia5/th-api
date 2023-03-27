@@ -4,21 +4,21 @@ const route = require('./routes/products')
 const routesUser = require('./routes/users')
 const bodyParser = require('body-parser')
 const verificarToken = require('./controller/validate-token')
-const routerDash = require('./controller/dashboard')
+const cors = require('cors')
 
 const app = express()
 
+// app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
 
-app.use('/profile', routerDash)
 app.use('/products', route )
 app.use('/users', routesUser )
 
