@@ -2,8 +2,13 @@ const {Sequelize} = require('sequelize')
 const product = require('./models/productos')
 const celular = require('./models/celulares')
 const user = require('./models/users')
+require('dotenv').config()
 
-const database = new Sequelize(`postgres://postgres:admin@localhost:5432/totalhogar`,  {logging: false} )
+let usuario = process.env.DB_USER
+let contraseña = process.env.DB_PASSWORD
+let host = process.env.DB_HOST
+
+const database = new Sequelize(`postgres://${usuario}:${contraseña}@${host}/totalhogar`,  {logging: false} )
 
 product(database)
 celular(database)
