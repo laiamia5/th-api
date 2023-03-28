@@ -99,9 +99,10 @@ const verifyToken = (req, res, next) => {
 
 // -----------------------------OBTENER PERFIL DE USUARIO------------------------------
 
-routesUser.get('/profile', verifyToken, async (req, res) => { 
+routesUser.get('/profile/:id', verifyToken, async (req, res) => { 
 
-    let idusuario = req.user.id
+    let idusuario = req.params.id
+
     try{
         let usuario = await users.findByPk(idusuario)
         res.send(usuario)
