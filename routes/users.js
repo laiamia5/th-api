@@ -12,7 +12,7 @@ const routesUser = Router()
 
 routesUser.get('/', async (req, res) => {
     try{
-        let data = await users.findAll()
+        let data = await users.findAll( {include: {model: productos , through: {attributes: []}}})
         res.status(200).json(data)
     }
     catch(err){
@@ -110,6 +110,30 @@ routesUser.get('/profile/:id', verifyToken, async (req, res) => {
         res.status(401).send('error de acceso')
     }
 
+})
+
+// -----------------------------------CREAR--CARRITO-------------------------------------------
+
+
+//este va a ser el registro de las compras realizadas por los clientes 
+
+routesUser.put('/carrito/:id' , verifyToken, async (req, res) => {
+    const {id} = req.params
+    let respuesta = await users.findOne({
+        where:{ id: id } ,
+        include:{model: productos , through: {attributes: []}}
+    })
+    let ids = []
+    await respuesta.productos.forEach((e) => ids.push(e.id))
+    let todosProductos = [...ids, ...req.body]
+
+    try{
+        let usuario = await users.findByPk(id)
+        usuario.setProductos(todosProductos)
+        res.status(200).send('compra exitosa')
+    }catch(err){
+        res.status(400).send(err)
+    }
 })
 
 

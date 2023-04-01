@@ -24,6 +24,10 @@ module.exports = (sequelize) => {
         },
         stock:{
             type: DataTypes.INTEGER
+        },
+        img: {
+            type: DataTypes.TEXT
         }
+
     },{timestamps: false})
 }

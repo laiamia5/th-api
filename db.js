@@ -19,4 +19,8 @@ const { productos } = database.models
 const { celulares } = database.models
 const { users } = database.models
 
+users.belongsToMany(productos, {through: "carrito"})
+productos.belongsToMany(users, {through: "carrito"})
+
+
 module.exports = {database, productos, celulares, users} 
