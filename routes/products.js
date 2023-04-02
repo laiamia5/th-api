@@ -16,7 +16,7 @@ route.get('/', async (req, res) => {
 
 //----------------------------------------CREAR PRODUCTOS---------------------------------------
 route.post('/', async (req, res) => {
-   const {nombre, precio, descripcion, categoria, marca, stock} = req.body
+   const {nombre, precio, descripcion, categoria, marca, stock, img} = req.body
 
    try{
         let nuevoProd = await productos.create({
@@ -25,7 +25,8 @@ route.post('/', async (req, res) => {
             descripcion: descripcion,
             categoria: categoria,
             marca: marca,
-            stock: stock
+            stock: stock,
+            img: img
         })
         res.status(200).send('se ha creado el producto exitosamente')
    }catch(err){
@@ -33,6 +34,22 @@ route.post('/', async (req, res) => {
    }
 })
 
-//-----------------------------------FILTRAR PRODUCTOS---------------------------------------
+//-----------------------------------ELIMINAR PRODUCTOS---------------------------------------
+
+route.delete('/:id', async (req, res) => {
+    const {id} = req.params
+    productos.destroy({
+        where:{
+            id: id
+        }
+    })
+    try{
+        res.status(200).send('borrado exitoso')
+    }catch(err){
+        res.status(400).send(err)
+    }
+})
+
+
 
 module.exports = route
