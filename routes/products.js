@@ -1,12 +1,12 @@
 const {Router} = require('express')
-const {productos} = require('../db')
+const { producto } = require('../db')
 
 const route = Router()
 
 //------------------------------------------TODOS LOS PRODUCTOS------------------------------------
 route.get('/', async (req, res) => {
     try{
-        let data = await productos.findAll()
+        let data = await producto.findAll()
         res.status(200).json(data)
     }
     catch(err){
@@ -19,7 +19,7 @@ route.post('/', async (req, res) => {
    const {nombre, precio, descripcion, categoria, marca, stock, img} = req.body
 
    try{
-        let nuevoProd = await productos.create({
+        let nuevoProd = await producto.create({
             nombre: nombre,
             precio: precio,
             descripcion: descripcion,
@@ -38,7 +38,7 @@ route.post('/', async (req, res) => {
 
 route.delete('/:id', async (req, res) => {
     const {id} = req.params
-    productos.destroy({
+    producto.destroy({
         where:{
             id: id
         }

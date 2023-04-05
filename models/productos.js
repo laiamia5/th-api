@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('productos', {
+    sequelize.define('producto', {
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -27,6 +27,9 @@ module.exports = (sequelize) => {
         },
         img: {
             type: DataTypes.TEXT
+        },
+        cantidad: {
+            type: DataTypes.INTEGER 
         }
 
     },{timestamps: false})

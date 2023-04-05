@@ -3,12 +3,10 @@ const {database} = require('./db')
 const route = require('./routes/products')
 const routesUser = require('./routes/users')
 const bodyParser = require('body-parser')
-const verificarToken = require('./controller/validate-token')
-const cors = require('cors')
+const routeCompras = require('./routes/compras')
 
 const app = express()
 
-// app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use((req, res, next) => {
@@ -19,8 +17,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/products', route )
-app.use('/users', routesUser )
+app.use('/productos', route )
+app.use('/usuarios', routesUser )
+app.use('/carrito', routeCompras)
 
 database
 .sync({alter: true})
@@ -28,5 +27,5 @@ database
     app.listen(3001, () => {
       console.log('se esta escuchando todo bien'); 
     });
-  });
+});
   
