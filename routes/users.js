@@ -35,7 +35,7 @@ routesUser.get('/compras', async (req, res) => {
 
 routesUser.post('/signup', async (req, res) => {
 
-    const {nombre, apellido, email, contraseña} = req.body
+    const {nombre, apellido, email, contraseña, dni} = req.body
 
     const usuario_ingresante = await usuario.findOne({ where: { email }})
 
@@ -48,6 +48,7 @@ routesUser.post('/signup', async (req, res) => {
                 apellido: apellido,
                 email: email,
                 contraseña: hash,
+                dni: dni
              })
              res.status(200).send('se ha creado el usuario exitosamente')
         }else{

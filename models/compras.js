@@ -13,8 +13,16 @@ module.exports = (sequelize) => {
         direccion: {
             type: DataTypes.TEXT
         },
-        envio: {
-            type : DataTypes.BOOLEAN
+        entrega:{
+            type: DataTypes.ENUM('pendiente', 'en camino', 'entregada'),
+            defaultValue: "pendiente"
+        },
+        pago:{
+            type: DataTypes.ENUM('pendiente', 'pagado realizado'),
+            defaultValue: "pendiente"
+        },
+        comprobante: {
+            type: DataTypes.TEXT
         }
     },{timestamps: false})
 }
