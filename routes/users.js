@@ -83,7 +83,6 @@ routesUser.post('/signup', async (req, res) => {
         name: usuario_ingresante.nombre
     }
     const token = jwt.sign(info, process.env.SECRET_TOKEN)
-
     res.status(200).json({...usuario_ingresante.dataValues, token})
 
 })
@@ -114,7 +113,7 @@ const verifyToken = (req, res, next) => {
 routesUser.get('/profile/:id', verifyToken, async (req, res) => { 
 
     let idusuario = req.params.id
-
+    console.log(req.cookies)
     try{
         let user = await usuario.findByPk(idusuario)
         res.send(user)

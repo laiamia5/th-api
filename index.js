@@ -4,6 +4,7 @@ const route = require('./routes/products')
 const routesUser = require('./routes/users')
 const bodyParser = require('body-parser')
 const routeCompras = require('./routes/compras')
+const payRouter = require('./routes/mp')
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 app.use('/productos', route )
 app.use('/usuarios', routesUser )
 app.use('/carrito', routeCompras)
+app.use('/pagar', payRouter)
 
 database
 .sync({alter: true})
