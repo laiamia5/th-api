@@ -25,6 +25,9 @@ module.exports = (sequelize) => {
         dni: {
             type: DataTypes.INTEGER,
             allowNull: false,
+        },
+        direccion : {
+            type: DataTypes.TEXT
         }
     },{timestamps: false})
 }

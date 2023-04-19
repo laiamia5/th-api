@@ -10,9 +10,6 @@ module.exports = (sequelize) => {
         cantidad: {
             type : DataTypes.INTEGER,
         },
-        direccion: {
-            type: DataTypes.TEXT
-        },
         entrega:{
             type: DataTypes.ENUM('pendiente', 'en camino', 'entregada'),
             defaultValue: "pendiente"
@@ -23,6 +20,9 @@ module.exports = (sequelize) => {
         },
         comprobante: {
             type: DataTypes.TEXT
+        },
+        envio : {
+            type: DataTypes.BOOLEAN//true si quiere que se lo envien false si no
         }
-    },{timestamps: false})
+    })
 }

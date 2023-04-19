@@ -82,7 +82,7 @@ routesUser.post('/signup', async (req, res) => {
         id : usuario_ingresante.id,
         name: usuario_ingresante.nombre
     }
-    const token = jwt.sign(info, process.env.SECRET_TOKEN)
+    const token = jwt.sign(info, process.env.SECRET_TOKEN, {expiresIn: "15d"})
     res.status(200).json({...usuario_ingresante.dataValues, token})
 
 })
