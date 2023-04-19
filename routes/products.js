@@ -14,6 +14,19 @@ route.get('/', async (req, res) => {
     }
 })
 
+//------------------------------------------TODOS LOS PRODUCTOS------------------------------------
+
+route.get('/:id', async (req, res) => {
+    const {id} = req.params
+    try{
+        let data = await producto.findOne({where: {id}})
+        res.status(200).json(data)
+    }
+    catch(err){
+        res.status(400).send('no')
+    }
+})
+
 //----------------------------------------CREAR PRODUCTOS---------------------------------------
 route.post('/', async (req, res) => {
    const {nombre, precio, descripcion, categoria, marca, stock, img} = req.body
