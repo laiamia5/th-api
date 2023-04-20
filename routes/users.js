@@ -147,6 +147,20 @@ routesUser.get('/profile/:id', verifyToken, async (req, res) => {
 //     }
 // })
 
+// -------------------------------COMPLETAR INFORMACION DEL USUARIO-------------------------------------------
+
+routesUser.put('/:id', async (req, res) => {
+    let idusuario = req.params.id
+    const { nombre, apellido, dni, direccion} = req.body
+    try{
+        const cambiarInfo = await usuario.update( { nombre, apellido, dni, direccion} , { where: { id: idusuario } })
+        res.status(200).send(cambiarInfo)
+    }catch(err){
+        res.status(400).send('los datos ingresados no son correctos')
+    }
+})
+
+
 
 
 module.exports = routesUser
